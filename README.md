@@ -8,6 +8,6 @@ Requires selenium and sqlite3. Username and password should be stored in `creden
 
 # To be added:
 
-* Possibly a bash script to setup a cron job to scrape the investments
+* Set up a cron job to scrape the investments daily
 * Duplicate entry per day prevention
 * Cleaner data parsing
