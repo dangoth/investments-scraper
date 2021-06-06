@@ -11,3 +11,9 @@ Requires selenium and sqlite3. Username and password should be stored in `creden
 * Set up a cron job to scrape the investments daily
 * Duplicate entry per day prevention
 * Cleaner data parsing
+
+
+# Version history
+
+* v 0.2 - added check if db exists, date format without time, protection against duplicating query for the day
+* v 0.1 - first commit
