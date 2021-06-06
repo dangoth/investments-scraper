@@ -1,13 +1,13 @@
 import credentials
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
-#from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import TimeoutException
 import sqlite3
-from datetime import datetime
+import datetime
+import os
 
 
 timeout = 10
@@ -54,20 +54,31 @@ equity_sum_val = first_equity_val + second_equity_val
 equity_total_count = first_equity_count + second_equity_count
 total = obli_sum_val + equity_sum_val
 
-print(f"{first_obli_val}\n{second_obli_val}\n{first_equity_val}\n{second_equity_val}")
-print(f"{first_obli_count}\n{second_obli_count}\n{first_equity_count}\n{second_equity_count}")
 try:
     conn = sqlite3.connect('investments.sqlite')
     cur = conn.cursor()
-    cur.execute('CREATE TABLE investments (date timestamp, obligations REAL, obligations_units REAL, equity REAL, equity_units REAL, total REAL)')
-    conn.commit()
-    sqlite_insert_data = """INSERT INTO 'investments' ('date', 'obligations', 'obligations_units', 'equity', 'equity_units', 'total') VALUES (?, ?, ?, ?, ?, ?);"""
-    data_tuple = (datetime.now(), obli_sum_val, obli_total_count, equity_sum_val, equity_total_count, total)
-    cur.execute(sqlite_insert_data, data_tuple)
-    conn.commit()
-    cur.close()
+    #check if db exists
+    if not os.path.exists('./investments.sqlite'):
+        print("Database does not exist. Creating")
+        cur.execute('CREATE TABLE investments (date timestamp, obligations REAL, obligations_units REAL, equity REAL, equity_units REAL, total REAL)')
+        conn.commit()
+    #check if today's entry exists
+    query = cur.execute(f"SELECT * FROM investments WHERE date LIKE \'{datetime.date.today()}\'")
+    try:
+        query.fetchone()[0]
+
+    except TypeError:
+        print("Inserting today's entry")
+        sqlite_insert_data = """INSERT INTO 'investments' ('date', 'obligations', 'obligations_units', 'equity', 'equity_units', 'total') VALUES (?, ?, ?, ?, ?, ?);"""
+        data_tuple = (datetime.date.today(), obli_sum_val, obli_total_count, equity_sum_val, equity_total_count, total)
+        cur.execute(sqlite_insert_data, data_tuple)
+        conn.commit()
+        cur.close()
+    else:
+        print("Today's entry already exists. Skipping")
 except sqlite3.Error as error:
     print("Database error")
 finally:
     if conn:
         conn.close()
+        driver.quit()
