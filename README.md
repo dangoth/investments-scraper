@@ -8,10 +8,13 @@ Uses selenium and sqlite3. Username and password should be stored in `Credential
 
 Data format before parsing:
 
-`BNP Paribas Globalny Dynamicznego Wzrostu kat. C Składka pracodawcy d ddd,dd PLN dd.dddddd
-BNP Paribas Globalny Dynamicznego Wzrostu kat. C Składka pracownika dd ddd,dd PLN dd.dddddd
-BNP Paribas Obligacji kat. C Składka pracodawcy d ddd,dd PLN dd.dddddd
-BNP Paribas Obligacji kat. C Składka pracownika d ddd,dd PLN dd.dddddd`
+`BNP Paribas Globalny Dynamicznego Wzrostu kat. C Składka pracodawcy d ddd,dd PLN dd.dddddd`
+
+`BNP Paribas Globalny Dynamicznego Wzrostu kat. C Składka pracownika dd ddd,dd PLN dd.dddddd`
+
+`BNP Paribas Obligacji kat. C Składka pracodawcy d ddd,dd PLN dd.dddddd`
+
+`BNP Paribas Obligacji kat. C Składka pracownika d ddd,dd PLN dd.dddddd`
 
 
 
